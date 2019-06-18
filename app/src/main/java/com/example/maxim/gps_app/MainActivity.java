@@ -18,6 +18,7 @@ import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,18 +39,6 @@ import com.google.android.gms.tasks.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class Market {
-    public String name;
-    public double lat;
-    public double lon;
-
-    public Market (String name, double lat, double lon) {
-        this.name = name;
-        this.lat = lat;
-        this.lon = lon;
-    }
-}
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "gps-app";
     private static final int REQUEST_LOCATION_PERMISSION = 200;
@@ -63,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
 
-    private ArrayList<Market> markets = new ArrayList<>();
+    private ImageView image;
+
 
     @Override
     protected void onStart() {
@@ -77,9 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        markets.add(new Market("Fora", 50.4005544, 30.3925465));
-        markets.add(new Market("ATB", 50.4052288, 30.3940271));
-        markets.add(new Market("Novus", 50.4043304, 30.3939074));
 
         if (ContextCompat.checkSelfPermission(
                 this.getBaseContext(),
@@ -102,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         locationView = (TextView) findViewById(R.id.geodata);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        image = (ImageView) findViewById(R.id.image);
+        image.setImageResource(R.drawable.market_atb);
 
         locationRequest = LocationRequest.create();
         locationRequest.setInterval(10000);
